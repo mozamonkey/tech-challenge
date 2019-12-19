@@ -1,0 +1,18 @@
+.home .w3-card {
+  margin: 0 auto;
+  text-align: center
+}
+.userSelection {
+  width: 50%; 
+}
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+}
+.gallery > div > img {
+  height: auto;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: .3s;
+  margin: 20px
+}
