@@ -11,21 +11,19 @@ import AppRoutes from './routes/AppRoutes';
 import store from './stores/RootStore';
 
 class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <BrowserRouter>
-          <div>
-            <div className="body-content w3-main" id="main">
-              <div className="w3-container w3-display-container">
-                <AppRoutes />
-              </div>
-            </div>
-          </div>
-        </BrowserRouter>
-      </Provider>
-    );
-  }
+    render() {
+        return (
+            <Provider store={store}>
+                <BrowserRouter>
+                    <div className="body-content w3-main" id="main">
+                        <div className="w3-container w3-display-container">
+                            <AppRoutes />
+                        </div>
+                    </div>
+                </BrowserRouter>
+            </Provider>
+        );
+    }
 }
 
 export default App;

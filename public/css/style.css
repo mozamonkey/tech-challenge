@@ -1,39 +1,53 @@
 body{
-    margin: 0;
-    background-color: #ffd8d8;
+    margin: 0; background-image: linear-gradient(to right, #2A105B, #9C197E); height: 100vh; min-height: 100%; overflow: auto;
 }
 .home .w3-card {
-  margin: 0 auto;
-  text-align: center
+    margin: 0 auto; text-align: center;
+}
+#root {
+    height: 100vh;
+}
+#main {
+    display: -webkit-box; display: -ms-flexbox; display: flex; min-height: 100%; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center;
 }
 .select-wrapper {
-  width: 50%; 
-  margin: 0 auto
+    width: 50%; margin: 0 auto
 }
 .album, 
 .gallery {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+    display: flex; flex-wrap: wrap; justify-content: center;
+}
+.gallery.pics {
+    padding: 0 7.0rem;
+}
+.gallery .w3-cell .w3-cell-container {
+    /* display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; width: 13rem; height: 10rem; background-color: #ffffff; */
+     border-radius: 1.5rem; margin-right: 2.0rem; margin-bottom: 2.5rem; float: left; cursor: pointer;
+}
+.gallery .w3-cell .w3-cell-container span {
+    color: #2A105B; font-weight: 600;
+}
+.gallery .w3-cell .w3-cell-text {
+    float: right; margin-right: 1.0rem; width: 8.0rem; margin: 2.0rem 1rem 2rem 0;
+}
+.gallery .w3-cell .w3-cell-text span {
+    color: #ffffff; display: block; line-height: 2.3rem; font-size: 1.2rem;
+}
+.gallery .w3-cell img {
+    /* display: none; */
 }
 .albumCard {
-  margin: 20px;
-  max-width: 200px;
-  background: #fff;
-  border: 5px solid #ff7575;
-  border-radius: 3px;
-  cursor: pointer;
+    margin: 1.0rem; max-width: 12.0rem; min-height: 10.0rem; background: #fff; border-radius: 1.5rem; cursor: pointer; padding: 1.0rem;
 }
 .albumCard:hover {
-  background: #ffe;
-  border-radius: 0px;
-  border: 5px solid #d45d5d;
-  transition: .3s;
+    background: #EFEFEF; border-radius: 1.5rem; transition: .3s;
 }
 .gallery > div > img {
-  height: auto;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: .3s;
-  margin: 20px
+    height: auto; border-radius: 0.5rem; cursor: pointer; transition: .3s; margin: 2.0rem;
+}
+.heading-title {
+    width: 100%; font-size: 2.0rem; color: #ffffff; border-bottom: solid 1px #ffffff; margin: 0 8.0rem 2rem;
+}
+.gallery .heading-title {
+    margin-left: 0; margin-right: 0;
 }
