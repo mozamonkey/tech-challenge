@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 import Select from 'react-select'
 
+import LightImageBox from './LightImageBox'
 import { FETCH_USER_ERROR, FETCH_USER_ALBUM_ERROR, FETCH_USER_ALBUM_PHOTOS_ERROR } from '../actions/types';
 import { GetUsers, startFetchingUser, GetUserAlbum, startFetchingAlbum, GetUserAlbumPhotos, startFetchingAlbumPhotos } from '../actions/UserActions';
 
@@ -14,7 +15,10 @@ class Home extends Component {
 
     this.state = {
       selectedUserId: null,
-      selectedAlbumId: null
+      selectedAlbumId: null,
+      selectedPhotoIndex: null,
+      openLightBox: false,
+      images: []
     }
   }
 
@@ -48,19 +52,39 @@ class Home extends Component {
     }
   }
 
+  onSelectPhoto = (index) => {
+    let { albumPhotos } = this.props.user
+    let onlyImages = albumPhotos.map(img => img.url)
+    this.setState({
+      selectedPhotoIndex: index,
+      openLightBox: true,
+      images: onlyImages
+    })
+  }
+
+  onLightBoxClose = () => {
+    this.setState({
+      selectedPhotoIndex: null,
+      openLightBox: false,
+      images: []
+    })
+  }
+
   render() {
     let { fetching, userInfo, albumFetching, userAlbum, photosFetching, albumPhotos } = this.props.user
-    let { selectedUserId }= this.state
+    let { openLightBox, images, selectedPhotoIndex }= this.state
     return (
       <div className="w3-container home">
 
         <div className="w3-padding-16">
-          {fetching && 
-            <div>loading...</div>
-          }
-          {userInfo.length > 0 &&
-            <UserSelection userInfo={userInfo} _onChange={this.onChangeUser} />
-          }
+          <div className="select-wrapper">
+            {fetching && 
+              <div>loading...</div>
+            }
+            {userInfo.length > 0 &&
+              <UserSelection userInfo={userInfo} _onChange={this.onChangeUser} />
+            }
+          </div>
         </div>
 
         <div className="w3-padding-16">
@@ -77,12 +101,26 @@ class Home extends Component {
             <div>loading...</div>
           }
           {albumPhotos.length > 0 &&
-            <AlbumPhotos photos={albumPhotos}/>
+            <AlbumPhotos photos={albumPhotos} _onChange={this.onSelectPhoto} />
           }
         </div>
+        { openLightBox &&
+          <LightImageBox images={images} selectedPhotoIndex={selectedPhotoIndex} openLightBox={openLightBox} onClose={this.onLightBoxClose} />
+        }
       </div>
     )
   }
+}
+
+const colourStyles = {
+  control: styles => ({ ...styles, 
+    borderWidth: '15px',
+    border: '15px solid #fff',
+    backgroundColor: 'transparent',
+    borderRadius: '7px',
+    transition: '0.5s ease all',
+    padding: '5px 10px'
+  })
 }
 
 const UserSelection = ({
@@ -99,6 +137,7 @@ return (
   <Select 
     options={options}
     onChange={_onChange}  
+    styles={colourStyles}
   />
 )
 }
@@ -107,10 +146,10 @@ const UserAlbum = ({
   albums,
   _onChange
 }) => (
-  <div>
+  <div className={'album'}>
     {
       albums.map((album, index) => 
-        <div key={`album-${index}`} className="w3-container w3-cell w3-mobile" onClick={()=> _onChange(album.id)}>
+        <div key={`album-${index}`} className="w3-container w3-cell w3-mobile albumCard" onClick={()=> _onChange(album.id)}>
           <span>{album.title}</span>
         </div>
       )
@@ -119,12 +158,13 @@ const UserAlbum = ({
 )
 
 const AlbumPhotos = ({
-  photos
+  photos,
+  _onChange
 }) => (
   <div className={'gallery'}>
     {
       photos.map((photo, index) => 
-        <div key={`photo-${index}`} className="w3-cell w3-mobile">
+        <div key={`photo-${index}`} className="w3-cell w3-mobile" onClick={() => _onChange(index)}>
           <img src={photo.thumbnailUrl} />
         </div>
       )
